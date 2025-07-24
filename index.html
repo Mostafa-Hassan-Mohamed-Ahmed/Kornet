@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>نشر فيديو على المنصات</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    input, textarea, button { margin: 10px; padding: 10px; width: 80%; }
+  </style>
+</head>
+<body>
+  <h1>📤 رفع فيديو للنشر</h1>
+  <form id="videoForm">
+    <input type="text" name="title" placeholder="عنوان الفيديو" required><br>
+    <textarea name="description" placeholder="وصف الفيديو" required></textarea><br>
+    <input type="file" name="video" accept="video/mp4" required><br>
+    <button type="submit">✅ نشر الفيديو</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script>
+    const form = document.getElementById("videoForm");
+    const status = document.getElementById("status");
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      status.innerText = "⏳ جاري الرفع...";
+
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch("https://hook.us2.make.com/qvhhk8acnrwsyeq3orsktmoptl2sspsf", {
+          method: "POST",
+          body: formData
+        });
+
+        if (res.ok) {
+          status.innerText = "✅ تم إرسال الفيديو بنجاح!";
+        } else {
+          status.innerText = "❌ فشل الإرسال.";
+        }
+      } catch (err) {
+        status.innerText = "❌ خطأ في الاتصال.";
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
